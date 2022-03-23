@@ -25,6 +25,9 @@ sudo ln -s ${FOLDER}/ufe_enable.sh ${INSTALL_LOCATION}/ufw_enable
 
 echo "Installing crontab as:"
 echo "@reboot ${INSTALL_LOCATION}/external_connections ${dom1} ${dom2}"
-sudo /bin/bash -c 'echo "@reboot root ${INSTALL_LOCATION}/external_connections ${dom1} ${dom2}" >> /etc/crontab'
+sudo echo "@reboot root ${INSTALL_LOCATION}/external_connections ${dom1} ${dom2}" |& sudo tee /etc/cron.d/ext_conn
+sudo chmod 600 /etc/cron.d/ext_conn
+
+#sudo /bin/bash -c 'echo "@reboot root ${INSTALL_LOCATION}/external_connections ${dom1} ${dom2}" >> /etc/crontab'
 
 exit 0
