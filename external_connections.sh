@@ -36,7 +36,7 @@ check() {
 
 ufw_automate() {
 	# Get old addresses
-        old_addresses=$(cat /var/log/ufw_automation)
+        old_addresses=$(cat /var/log/ufw_allowed)
 
         # awk single addresses to get separate variables
         old_mi9=$(echo ${old_addresses} | awk -F',' '{print $1}')
@@ -65,10 +65,10 @@ ufw_automate() {
                 # Allow SSH
                 ufw allow from ${new_mbp} to any port 22 proto tcp
         fi
-ò       truncate -s0 /var/log/ufw_automation
-        echo $new_mi > /var/log/ufw_automation
-	echo "," >> /var/log/ufw_automation
-        echo $new_mbp >> /var/log/ufw_automation
+ò       truncate -s0 /var/log/ufw_allowed
+        echo $new_mi > /var/log/ufw_allowed
+	echo "," >> /var/log/ufw_allowed
+        echo $new_mbp >> /var/log/ufw_allowed
 }
 
 # Main
