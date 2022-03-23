@@ -79,12 +79,12 @@ ufw_automate() {
 # Main
 FILE=/var/log/ufw_control
 
-sleep 2m
+#sleep 2m
 
 ufw enable
 while [ ! -f "$FILE" ]
 do
-	if [ $(check) == 1 ]
+	if [ check == 1 ]
 	then
 		ufw_automate
 	fi
