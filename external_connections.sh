@@ -22,7 +22,7 @@ check() {
 	old_addresses=$(cat /var/log/ufw_allowed)
 
 	# awk single addresses to get separate variables
-	old_mi9=$(echo ${old_addresses} | awk -F',' '{print $1}')
+	old_mi=$(echo ${old_addresses} | awk -F',' '{print $1}')
 	old_mbp=$(echo ${old_addresses} | awk -F',' '{print $2}')
 
 	# Get new addresses
@@ -42,36 +42,38 @@ ufw_automate() {
         old_addresses=$(cat /var/log/ufw_allowed)
 
         # awk single addresses to get separate variables
-        old_mi9=$(echo ${old_addresses} | awk -F',' '{print $1}')
+        old_mi=$(echo ${old_addresses} | awk -F',' '{print $1}')
         old_mbp=$(echo ${old_addresses} | awk -F',' '{print $2}')
 
 	# Get new addresses
-        new_mi=$(dig +short $addr1 @8.8.8.8)
-        new_mbp=$(dig +short $addr2 @8.8.8.8)
+        new_mi=$(dig +short $addr1 @dns1.registrar-servers.com)
+        new_mbp=$(dig +short $addr2 @dns1.registrar-servers.com)
 	
 	# Compare
-        if [ ${new_mi} != ${old_mi} ]
+        if [ "${new_mi}" != "${old_mi}" ]
         then
                 # Delete everything
                 number=$(sudo ufw status numbered | grep ${old_mi} | awk -F] '{print $1}' | grep -o [1-9])
                 ufw --force delete $number
                 # Allow SSH
                 ufw allow from ${new_mi} to any port 22 proto tcp
+		unset number
         fi
 
 	# Compare
-        if [ ${new_mbp} != ${old_mbp} ]
+        if [ "${new_mbp}" != "${old_mbp}" ]
         then
                 # Delete everything
                 number=$(sudo ufw status numbered | grep ${old_mbp} | awk -F] '{print $1}' | grep -o [1-9])
                 ufw --force delete $number
                 # Allow SSH
                 ufw allow from ${new_mbp} to any port 22 proto tcp
+		unset number
         fi
         truncate -s0 /var/log/ufw_allowed
-        echo $new_mi > /var/log/ufw_allowed
-	echo "," >> /var/log/ufw_allowed
-        echo $new_mbp >> /var/log/ufw_allowed
+        echo $new_mi","$new_mbp> /var/log/ufw_allowed
+#	echo "," >> /var/log/ufw_allowed
+#        echo $new_mbp >> /var/log/ufw_allowed
 }
 
 # Main
