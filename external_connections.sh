@@ -24,8 +24,8 @@ check() {
 	old_mbp=$(echo ${old_addresses} | awk -F',' '{print $2}')
 
 	# Get new addresses
-	new_mi=$(dig +short $addr1 @8.8.8.8)
-	new_mbp=$(dig +short $addr2 @8.8.8.8)
+	new_mi=$(dig +short $addr1 @dns1.registrar-servers.com)
+	new_mbp=$(dig +short $addr2 @dns1.registrar-servers.com)
 	# Compare
 	if [[ "${new_mi}" != "${old_mi}" || "${new_mbp}" != "${old_mbp}" ]]
 	then
