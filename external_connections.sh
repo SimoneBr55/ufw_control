@@ -84,7 +84,7 @@ FILE=/var/log/ufw_control
 ufw enable
 while [ ! -f "$FILE" ]
 do
-	if [ check == 1 ]
+	if [ "$(check)" == "1" ]
 	then
 		ufw_automate
 	fi
