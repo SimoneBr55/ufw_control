@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #-----------USAGE----------#
-if [ "$1" == "-h" || "$1" == "--help" ]
+if [[ "$1" == "-h" || "$1" == "--help" ]]
 then
 	echo "This script has to be run directly"
 	echo "(i.e. /path/2/script OR ./scripts)"
