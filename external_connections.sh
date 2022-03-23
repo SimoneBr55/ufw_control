@@ -81,7 +81,7 @@ FILE=/var/log/ufw_control
 
 #sleep 2m
 
-ufw enable
+ufw --force enable
 while [ ! -f "$FILE" ]
 do
 	if [ "$(check)" == "1" ]
