@@ -7,6 +7,7 @@ if [ "$1" == "-h" || "$1" == "--help" ]
 	echo ""
 	echo "./external_connections sdomain1 sdomain2"
 	exit 1
+fi
 #--------------------------#
 # Check for other instances running
 pidof -o %PPID -x $0 >/dev/null && exit 1  # Careful, this script must be run directly (i.e. ./script)
