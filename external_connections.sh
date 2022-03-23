@@ -32,6 +32,7 @@ check() {
 	if [[ "${new_mi}" != "${old_mi}" || "${new_mbp}" != "${old_mbp}" ]]
 	then
 		# Addresses are different
+		echo 'Different Addresses'
 		echo 1 # signal via exit code
 	fi
 }
