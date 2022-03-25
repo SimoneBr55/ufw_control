@@ -48,7 +48,7 @@ ufw_automate() {
 	# Get new addresses
         new_mi=$(dig +short $addr1 @dns1.registrar-servers.com)
         new_mbp=$(dig +short $addr2 @dns1.registrar-servers.com)
-	
+
 	# Compare
         if [ "${new_mi}" != "${old_mi}" ]
         then
@@ -57,7 +57,7 @@ ufw_automate() {
                 ufw --force delete $number
                 # Allow SSH
                 ufw allow from ${new_mi} to any port 22 proto tcp
-		unset number
+								unset number
         fi
 
 	# Compare
@@ -68,7 +68,7 @@ ufw_automate() {
                 ufw --force delete $number
                 # Allow SSH
                 ufw allow from ${new_mbp} to any port 22 proto tcp
-		unset number
+								unset number
         fi
         truncate -s0 /var/log/ufw_allowed
         echo $new_mi","$new_mbp> /var/log/ufw_allowed
